@@ -4,7 +4,7 @@ const tokenBuilder = require('./token-builder')
 const Users = require('./users-model')
 const { checkUsernameExists, checkUsernameFree, noMissingCredentials } = require('./auth-middleware');
 
-router.post('/register', checkUsernameFree, (req, res, next) => {
+router.post('/register', checkUsernameFree, noMissingCredentials, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
