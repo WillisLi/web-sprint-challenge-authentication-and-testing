@@ -31,8 +31,7 @@ router.post('/register', checkUsernameFree, noMissingCredentials, (req, res, nex
       the response body should include a string exactly as follows: "username taken".
   */
   const user = req.body;
-  const rounds = process.env.BCRYPT_ROUNDS || 8;
-  const hash = bcrypt.hashSync(user.password, rounds);
+  const hash = bcrypt.hashSync(user.password, 8);
   user.password = hash;
 
   Users.add(user)
@@ -42,7 +41,7 @@ router.post('/register', checkUsernameFree, noMissingCredentials, (req, res, nex
     .catch(next);
 });
 
-router.post('/login', checkUsernameExists, noMissingCredentials, (req, res, next) => {
+router.post('/login', checkUsernameExists, noMissingCredentials, (req, res) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -71,7 +70,7 @@ router.post('/login', checkUsernameExists, noMissingCredentials, (req, res, next
     const token = tokenBuilder(req.user)
     res.status(200).json({message: `welcome, ${username}!`, token,})
   } else {
-    next({status: 401, message: "invalid credentials"})
+    res.status(401).json({message: "invalid credentials"})
   }
 });
 

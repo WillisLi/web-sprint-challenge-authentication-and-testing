@@ -5,7 +5,7 @@ const checkUsernameExists = (req, res, next) => {
     Users.getBy({ username })
       .then(exists => {
         if (!exists.length) {
-          next({status: 401, message: "invalid credentials"})
+          res.status(401).json({message: "invalid credentials"})
         } else {
           req.user = exists[0]
           next();
@@ -15,11 +15,11 @@ const checkUsernameExists = (req, res, next) => {
 }
 
 const checkUsernameFree = (req, res, next) => {
-    const { username } = req.body.username;
-    Users.getBy(username)
+    const { username } = req.body;
+    Users.getBy({ username })
         .then(exists => {
             if (exists.length) {
-                next({status: 422, message: "username taken"})
+                res.status(422).json({message: "username taken"})
             } else {
                 next();
             }
