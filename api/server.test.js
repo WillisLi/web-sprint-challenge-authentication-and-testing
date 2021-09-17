@@ -48,3 +48,11 @@ describe('[POST] /api/auth/login', () => {
     expect(res.status).toBe(401)
   }, 600)
 })
+
+describe('[GET] /api/jokes', () => {
+  test('restricts access to jokes if not logged in', async () => {
+    const res = await request(server)
+      .get('/api/jokes')
+    expect(res.status).toBe(401)
+  }, 600)
+})
