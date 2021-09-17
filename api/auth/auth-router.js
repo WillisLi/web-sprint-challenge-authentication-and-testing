@@ -4,7 +4,7 @@ const tokenBuilder = require('./token-builder')
 const Users = require('./users-model')
 const { checkUsernameExists, checkUsernameFree, noMissingCredentials } = require('./auth-middleware');
 
-router.post('/register', checkUsernameFree, noMissingCredentials, (req, res, next) => {
+router.post('/register', noMissingCredentials, checkUsernameFree, (req, res, next) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
@@ -41,7 +41,7 @@ router.post('/register', checkUsernameFree, noMissingCredentials, (req, res, nex
     .catch(next);
 });
 
-router.post('/login', checkUsernameExists, noMissingCredentials, (req, res) => {
+router.post('/login', noMissingCredentials, checkUsernameExists, (req, res) => {
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
